@@ -1,0 +1,11 @@
+uart_module.c:36:1:__io_putchar	16	static
+uart_module.c:44:6:uart_module_init	24	static
+uart_module.c:56:6:usb_uart_printLog	8	static
+uart_module.c:78:6:uart_module_IRQHandler	24	static
+uart_module.c:144:6:usb_uart_module_send_hex	16	static
+uart_module.c:151:6:uart_module_send_hex	16	static
+uart_module.c:161:6:uart_module_stop_receive	16	static
+uart_module.c:168:6:uart_module_start_receive	16	static
+uart_module.c:175:6:rs485_handler	8	static
+uart_module.c:189:6:signal_wire_uart_handler	8	static
+uart_module.c:203:6:Logout	8	static

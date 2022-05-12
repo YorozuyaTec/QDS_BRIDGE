@@ -1,0 +1,5 @@
+single_wire.c:35:8:check_sum	24	static
+single_wire.c:51:8:check_sum_head	24	static
+single_wire.c:71:9:get_check_sum	24	static
+single_wire.c:83:6:signal_wire_read_handler	32	static
+single_wire.c:185:6:signle_test	8	static

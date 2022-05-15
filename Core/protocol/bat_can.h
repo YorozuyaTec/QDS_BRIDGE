@@ -14,6 +14,7 @@
 enum
 {
 	CHG_INIT,                  //初始化       ->CBV
+	CHG_ACTIVE,
 	CHG_CHECK_PAR,             //检查参数
 	CHG_HANDSHAKE,         //充电握手        ->CHM   BHM->
 	CHG_WAIT_HANDSHAKE,

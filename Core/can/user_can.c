@@ -141,15 +141,17 @@ void CAN_senddata(CAN_HandleTypeDef *hcan)
 	 HAL_CAN_AddTxMessage(hcan,&TXHeader,TXmessage,&pTxMailbox);
 }
 
-void user_can_send_data(uint32_t id , uint8_t *data)
+uint8_t user_can_send_data(uint32_t id , uint8_t *data)
 {
+	HAL_StatusTypeDef status;
      TXHeader.StdId=0x00000000;
 	 TXHeader.ExtId=id;
 	 TXHeader.DLC=8;
 	 TXHeader.IDE=CAN_ID_EXT;
 	 TXHeader.RTR=CAN_RTR_DATA;
 	 TXHeader.TransmitGlobalTime = DISABLE;
-	 HAL_CAN_AddTxMessage(&hcan,&TXHeader,data,&pTxMailbox);
+	 status =  HAL_CAN_AddTxMessage(&hcan,&TXHeader,data,&pTxMailbox);
+	 return status;
 }
 
 void CAN_Send_Pack(uint8_t *data,uint16_t lenth)

@@ -188,8 +188,35 @@ void bat_charge_management()
 	case CHG_INIT:
 
 		memset(tx_data,0xFF,8);
-		user_can_send_data(CBV, tx_data);
-		chg_fsm = CHG_CHECK_PAR;
+		if(user_can_send_data(CBV, tx_data) == HAL_OK)  //发送CBV轮询电池成功  正常通信或者无电池
+		{
+			 chg_fsm = CHG_CHECK_PAR;
+		}
+
+		else  //发送失败，休眠电池
+		{
+			retry_cnt++;
+			if(retry_cnt>10)  //2.5S
+			{
+				retry_cnt=0;
+				HAL_CAN_MspDeInit(&hcan); //重置CAN总线
+				chg_fsm = CHG_ACTIVE;
+			}
+
+		}
+
+		break;
+	case CHG_ACTIVE:
+		retry_cnt++;
+		if(retry_cnt>50) //12.5S
+		{
+			retry_cnt=0;
+			MX_CAN_Init();  //启动CAN总线
+		    CAN1_Config();
+			chg_fsm = CHG_INIT;
+		}
+
+
 		break;
 	case CHG_CHECK_PAR:
 		if(can_battery.battery_code[0]>0 && can_battery.battery_soc<100)  //读到编码且未满电  can_battery.battery_soc>=0
@@ -207,7 +234,7 @@ void bat_charge_management()
 			}
 			retry_cnt=0;
 		}
-		else if(can_battery.battery_soc == 100)
+		else if(can_battery.battery_soc == 100)  //满电
 		{
 			can_battery.connected_flag = true;
 			chg_fsm = CHG_FINISH;
@@ -217,7 +244,7 @@ void bat_charge_management()
 			chg_fsm = CHG_INIT;
 			retry_cnt++;
 			if(retry_cnt>10)  //电池未连接
-					{
+				{
 				retry_cnt = 10;
 				can_battery.connected_flag = false;
 				chg_fsm = CHG_INIT;

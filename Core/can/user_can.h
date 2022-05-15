@@ -22,7 +22,8 @@ uint8_t  getCheckSum(uint8_t *data,uint16_t lenth);
 void CAN_Send_Pack(uint8_t *data,uint16_t lenth);
 uint8_t Can_TxMessage(uint8_t ide,uint32_t id,uint8_t len,uint8_t *data);
 void CAN1_Config(void);
-void user_can_send_data(uint32_t id , uint8_t *data);
+//void user_can_send_data(uint32_t id , uint8_t *data);
+uint8_t user_can_send_data(uint32_t id , uint8_t *data);
 
 typedef  struct
 {
